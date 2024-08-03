@@ -7,10 +7,13 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <SearchCharacter />
-      <CharacterList />
-    </QueryClientProvider>
+    <div>
+      <h1 className="my-10">Star Wars</h1>
+      <QueryClientProvider client={queryClient}>
+        <SearchCharacter />
+        <CharacterList />
+      </QueryClientProvider>
+    </div>
   );
 }
 

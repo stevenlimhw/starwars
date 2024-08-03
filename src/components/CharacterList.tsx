@@ -17,15 +17,10 @@ export function CharacterList() {
     const response = await axios.get(
       `https://swapi.dev/api/people?page=${page}&limit=${limit}`
     );
-    console.log(response);
     return response.data["results"];
   };
 
-  const {
-    data: people = [],
-    isLoading,
-    isError,
-  } = useQuery(
+  const { data: people = [], isLoading } = useQuery(
     ["people", currentPage],
     () => getPeopleByPage(currentPage, ITEMS_PER_PAGE),
     {
@@ -33,22 +28,22 @@ export function CharacterList() {
     }
   );
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error!</div>;
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
   return (
-    <div className="p-8">
-      <h1>Star Wars</h1>
+    <div className="p-6 border border-white rounded-md my-20">
       <div className="card">
         <section>
-          <h2 className="text-2xl font-bold text-white">Characters</h2>
-          {people.map((person: Person, keyId: number) => (
-            <PersonCard key={keyId} person={person} />
-          ))}
+          <h2 className="text-2xl font-bold text-white">List of Characters</h2>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            people.map((person: Person, keyId: number) => (
+              <PersonCard key={keyId} person={person} />
+            ))
+          )}
           <div className="flex justify-center mt-4">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
